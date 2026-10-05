@@ -1,0 +1,12 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#buttons {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
