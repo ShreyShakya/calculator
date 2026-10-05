@@ -40,14 +40,34 @@ buttons.addEventListener("click", function (e) {
         display.value += e.target.textContent
     } 
 
-    if (e.target.classList.contains("operator")) {
+    if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber !== undefined) {
+        display.value = ""
+        display.value += e.target.textContent
+    }
+
+    if (e.target.classList.contains("operator") && firstNumber === undefined) {
         firstNumber = Number(display.value)
         display.value = ""
         operator = e.target.textContent
-    }
+    } else if (e.target.classList.contains("operator") && firstNumber !== undefined) {
+        secondNumber = Number(display.value)
+        display.value = operate(firstNumber, operator, secondNumber)
+        firstNumber = Number(display.value)
+        operator = e.target.textContent
+    } 
 
     if (e.target.classList.contains("equals")) {
         secondNumber = Number(display.value)
         display.value = operate(firstNumber, operator, secondNumber)
+        firstNumber = Number(display.value)
     }
+
+    if (e.target.classList.contains("clear")) {
+        firstNumber = ""
+        secondNumber = ""
+        operator = ""
+        display.value = ""
+    }
+
+
 })
