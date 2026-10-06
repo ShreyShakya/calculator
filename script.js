@@ -51,13 +51,16 @@ buttons.addEventListener("click", function (e) {
         firstNumber = Number(display.value)
         display.value = ""
         operator = e.target.textContent
-    } else if (e.target.classList.contains("operator") && secondNumber === undefined) {
-        display.value = ""
-        operator = e.target.textContent
-    } else if (e.target.classList.contains("operator") && firstNumber !== undefined) {
+    } else if (e.target.classList.contains("operator") && firstNumber != undefined && secondNumber === undefined) {
         secondNumber = Number(display.value)
+        display.value = ""
+        
+    }
+
+    if (e.target.classList.contains("operator") && firstNumber !== undefined && secondNumber !== undefined) {
         display.value = operate(firstNumber, operator, secondNumber)
         firstNumber = Number(display.value)
+        secondNumber = undefined
         operator = e.target.textContent
     }
 
