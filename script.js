@@ -36,12 +36,14 @@ let operator
 let secondNumber
 
 buttons.addEventListener("click", function (e) {
-    if (e.target.classList.contains("number")) {
-        display.value += e.target.textContent
-    } 
 
     if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber !== undefined) {
         display.value = ""
+        display.value += e.target.textContent
+    } else if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber === undefined) {
+        display.value = ""
+        display.value += e.target.textContent
+    } else if (e.target.classList.contains("number")) {
         display.value += e.target.textContent
     }
 
@@ -49,23 +51,27 @@ buttons.addEventListener("click", function (e) {
         firstNumber = Number(display.value)
         display.value = ""
         operator = e.target.textContent
+    } else if (e.target.classList.contains("operator") && secondNumber === undefined) {
+        display.value = ""
+        operator = e.target.textContent
     } else if (e.target.classList.contains("operator") && firstNumber !== undefined) {
         secondNumber = Number(display.value)
         display.value = operate(firstNumber, operator, secondNumber)
         firstNumber = Number(display.value)
         operator = e.target.textContent
-    } 
+    }
 
     if (e.target.classList.contains("equals")) {
         secondNumber = Number(display.value)
         display.value = operate(firstNumber, operator, secondNumber)
         firstNumber = Number(display.value)
+        secondNumber = undefined
     }
 
     if (e.target.classList.contains("clear")) {
-        firstNumber = ""
-        secondNumber = ""
-        operator = ""
+        firstNumber = undefined
+        secondNumber = undefined
+        operator = undefined
         display.value = ""
     }
 
