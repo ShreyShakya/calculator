@@ -34,15 +34,27 @@ const buttons = document.querySelector("#buttons")
 let firstNumber
 let operator
 let secondNumber
+let justCalculated = false
+let calculatedWithEquals = false
 
 buttons.addEventListener("click", function (e) {
 
     if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber !== undefined) {
         display.value = ""
         display.value += e.target.textContent
+    } else if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber === undefined && justCalculated === true && calculatedWithEquals === true) {
+        display.value = ""
+        display.value += e.target.textContent
+        justCalculated = false
+        firstNumber = undefined
+    } else if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber === undefined && justCalculated === true && calculatedWithEquals === false) {
+        display.value = ""
+        display.value += e.target.textContent
+        justCalculated = false
     } else if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber === undefined) {
         display.value = ""
         display.value += e.target.textContent
+        calculatedWithEquals = false
     } else if (e.target.classList.contains("number")) {
         display.value += e.target.textContent
     }
@@ -51,30 +63,40 @@ buttons.addEventListener("click", function (e) {
         firstNumber = Number(display.value)
         display.value = ""
         operator = e.target.textContent
+    } else if (e.target.classList.contains("operator") && firstNumber != undefined && secondNumber === undefined && justCalculated === true) {
+        firstNumber = Number(display.value)
+        display.value = ""
+        justCalculated = false
+        operator = e.target.textContent
     } else if (e.target.classList.contains("operator") && firstNumber != undefined && secondNumber === undefined) {
         secondNumber = Number(display.value)
         display.value = ""
-        
     }
 
     if (e.target.classList.contains("operator") && firstNumber !== undefined && secondNumber !== undefined) {
         display.value = operate(firstNumber, operator, secondNumber)
         firstNumber = Number(display.value)
         secondNumber = undefined
+        justCalculated = true
+        calculatedWithEquals = false
         operator = e.target.textContent
     }
 
-    if (e.target.classList.contains("equals")) {
+    if (e.target.classList.contains("equals") && firstNumber !== undefined && calculatedWithEquals === false ) {
         secondNumber = Number(display.value)
         display.value = operate(firstNumber, operator, secondNumber)
         firstNumber = Number(display.value)
         secondNumber = undefined
+        justCalculated = true
+        calculatedWithEquals = true
     }
 
     if (e.target.classList.contains("clear")) {
         firstNumber = undefined
         secondNumber = undefined
         operator = undefined
+        justCalculated = false
+        calculatedWithEquals = false
         display.value = ""
     }
 
