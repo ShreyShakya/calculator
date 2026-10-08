@@ -52,7 +52,6 @@ buttons.addEventListener("click", function (e) {
         display.value += e.target.textContent
         justCalculated = false
     } else if (e.target.classList.contains("number") && firstNumber !== undefined && secondNumber === undefined) {
-        display.value = ""
         display.value += e.target.textContent
         calculatedWithEquals = false
     } else if (e.target.classList.contains("number")) {
@@ -82,9 +81,9 @@ buttons.addEventListener("click", function (e) {
         operator = e.target.textContent
     }
 
-    if (e.target.classList.contains("equals") && firstNumber !== undefined && calculatedWithEquals === false ) {
+    if (e.target.classList.contains("equals") && firstNumber !== undefined && calculatedWithEquals === false) {
         secondNumber = Number(display.value)
-        display.value = operate(firstNumber, operator, secondNumber)
+        display.value = Math.floor(operate(firstNumber, operator, secondNumber))
         firstNumber = Number(display.value)
         secondNumber = undefined
         justCalculated = true
